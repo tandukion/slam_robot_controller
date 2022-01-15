@@ -1,0 +1,3 @@
+[submodule "include/motorPi"]
+	path = include/motorPi
+	url = https://github.com/tandukion/motorPi.git

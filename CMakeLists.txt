@@ -118,10 +118,22 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
+  include/motorPi/include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
+# motorPi library
+file(GLOB MOTORPI_SOURCES "include/motorPi/src/*.cpp")
+add_library(
+    motorPi SHARED 
+    ${MOTORPI_SOURCES}
+)
+target_link_libraries(
+    motorPi
+    libwiringPi.so
+)
+
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/slam_robot_controller.cpp
 # )
@@ -132,6 +144,16 @@ include_directories(
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
+# motorPi test script
+add_executable(
+    test_dualmotor 
+    include/motorPi/test/test_dualmotor.cpp
+)
+target_link_libraries(
+    test_dualmotor 
+    motorPi
+)
+
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/slam_robot_controller_node.cpp)
